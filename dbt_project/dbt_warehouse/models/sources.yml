@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: raw_db
+    database: abnb_datawarehouse  
+    schema: raw 
+    tables:
+      - name: listings

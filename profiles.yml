@@ -1,0 +1,34 @@
+default:
+  outputs:
+    dev:
+      type: duckdb
+      path: "md:{{ env_var('MOTHERDUCK_DB') }}?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}"
+      extensions:
+        - httpfs
+        - parquet
+      # settings:
+      #   s3_region: my-aws-region
+      #   s3_access_key_id: "{{ env_var('S3_ACCESS_KEY_ID') }}"
+      #   s3_secret_access_key: "{{ env_var('S3_SECRET_ACCESS_KEY') }}"
+  target: dev
+dbt_warehouse:
+  outputs:
+    dev:
+      type: duckdb
+      path: "md:{{ env_var('MOTHERDUCK_DB') }}?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}"
+      extensions:
+        - httpfs
+        - parquet
+      threads: 1
+      schema: dev_warehouse
+
+    prod:
+      type: duckdb
+      path: "md:{{ env_var('MOTHERDUCK_DB') }}?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}"
+      extensions:
+        - httpfs
+        - parquet
+      threads: 4
+      schema: datawarehouse
+
+  target: "{{ env_var('DBT_TARGET') }}"
